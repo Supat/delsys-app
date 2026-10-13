@@ -1,5 +1,6 @@
 import SwiftUI
 import TrignoKit
+import TrignoLSL
 
 struct SensorDetailView: View {
     @Environment(AppModel.self) private var model
@@ -206,5 +207,57 @@ struct RecordingsView: View {
         }
         .navigationTitle("Recordings")
         .onAppear { model.reloadRecordings() }
+    }
+}
+
+struct LSLSettingsView: View {
+    @Environment(AppModel.self) private var model
+
+    var body: some View {
+        @Bindable var model = model
+        Form {
+            Section {
+                LabeledContent("Name") { TextField("Delsys", text: $model.lsl.name).multilineTextAlignment(.trailing) }
+                LabeledContent("Type") { TextField("EMG Signal", text: $model.lsl.type).multilineTextAlignment(.trailing) }
+                LabeledContent("Source ID") { TextField("EMG_Signal", text: $model.lsl.sourceID).multilineTextAlignment(.trailing) }
+            } header: {
+                Text("EMG stream")
+            } footer: {
+                Text("Defaults match the NI-DAQ app (Daq_revised.py), so LabRecorder and existing scripts find the stream unchanged.")
+            }
+            .autocorrectionDisabled()
+
+            Section {
+                Picker("Channels", selection: $model.lsl.layout) {
+                    Text("16 slots (DAQ layout)").tag(LSLChannelLayout.daqCompatible)
+                    Text("Active sensors only").tag(LSLChannelLayout.activeChannels)
+                }
+                LabeledContent("EMG scale") {
+                    TextField("1", value: $model.lsl.emgScale, format: .number)
+                        .multilineTextAlignment(.trailing)
+                        #if os(iOS)
+                        .keyboardType(.decimalPad)
+                        #endif
+                }
+                Toggle("Also stream AUX (\(model.lsl.name) AUX)", isOn: $model.lsl.includeAux)
+            } header: {
+                Text("Channels")
+            } footer: {
+                Text("16 slots keeps channel n = sensor slot n, with zeros for empty slots. The SDK reports volts at the electrode; the DAQ recorded the base's amplified analog output, so set EMG scale to that gain if consumers expect the old magnitudes. AUX carries IMU channels at the AUX port rate.")
+            }
+
+            Section {
+                Button("Restore defaults") { model.lsl = LSLConfiguration() }
+            } footer: {
+                #if os(iOS)
+                Text("liblsl \(LSLStreamer.libraryVersion). On iPad, receivers may not discover the stream automatically, because iPadOS restricts multicast. Add the iPad's IP to KnownPeers in lsl_api.cfg on the receiving computer.")
+                #else
+                Text("liblsl \(LSLStreamer.libraryVersion).")
+                #endif
+            }
+        }
+        .formStyle(.grouped)
+        .disabled(model.isAcquiring)
+        .navigationTitle("LSL")
     }
 }

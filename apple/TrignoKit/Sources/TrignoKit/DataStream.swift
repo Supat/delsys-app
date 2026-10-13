@@ -10,6 +10,14 @@ public struct DataBlock: Sendable {
     public let startIndex: Int
     public let hostTime: Date
 
+    public init(port: DataPort, channelCount: Int, samples: [Float], startIndex: Int, hostTime: Date) {
+        self.port = port
+        self.channelCount = channelCount
+        self.samples = samples
+        self.startIndex = startIndex
+        self.hostTime = hostTime
+    }
+
     public var rowCount: Int { samples.count / channelCount }
 
     public func value(row: Int, column: Int) -> Float {

@@ -13,6 +13,8 @@ things as the Python `trigno` CLI:
 - **Sensor config**: mode, Avanti range and bandwidth, backwards compatibility,
   upsampling, and pairing.
 - **Console** for raw SDK commands.
+- **Lab Streaming Layer** output that can replace the NI-DAQ app (`Daq_revised.py`),
+  see below.
 
 ```
 apple/
@@ -50,6 +52,36 @@ like.
   Mac they're in
   `~/Library/Containers/com.supatsaetia.trigno/Data/Documents/Recordings`
   (the folder button in Recordings opens it in Finder).
+
+## Lab Streaming Layer
+
+Turn on **Stream to LSL** in the sidebar. While acquiring, the app publishes:
+
+| Stream | Name / type / source ID (defaults) | Channels | Rate |
+| --- | --- | --- | --- |
+| EMG | `Delsys` / `EMG Signal` / `EMG_Signal` | 16 (DAQ layout: channel n = sensor slot n, zeros for empty slots) or active sensors only | EMG port rate (2000 Hz by default) |
+| AUX (optional) | `Delsys AUX` / `AUX` / `EMG_Signal_AUX` | active IMU/aux channels | AUX port rate (148.1 Hz) |
+
+The defaults match `Daq_revised.py`, so LabRecorder and existing inlets find the
+stream without changes. Each stream carries channel labels and units in its
+`desc/channels` metadata. Outlets are created on Start and destroyed on Stop,
+like the DAQ app. Samples are timestamped with the LSL clock on arrival.
+
+Things to know:
+
+- **Magnitude.** The SDK reports EMG in volts at the electrode (around 1e-4 V).
+  The DAQ recorded the base station's amplified analog outputs, so the values
+  differ by the analog-output gain. If downstream code depends on the old
+  scale, set **EMG scale** in LSL settings to that gain.
+- **Discovery from an iPad.** LSL finds streams via UDP multicast/broadcast,
+  which iPadOS only permits with Apple's restricted
+  `com.apple.developer.networking.multicast` entitlement. Without it, add the
+  iPad's IP to `KnownPeers` in `lsl_api.cfg` on the receiving computer, for
+  example `KnownPeers = {192.168.11.23}` under `[lab]`. Or request the
+  entitlement from Apple and add it to the app's entitlements. The Mac build
+  needs nothing extra.
+- liblsl is the official v1.17.7 `lsl.xcframework`, fetched by SwiftPM from the
+  liblsl GitHub release and pinned by checksum in `TrignoKit/Package.swift`.
 
 ## Development without hardware
 

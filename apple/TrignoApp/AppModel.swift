@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import TrignoKit
+import TrignoLSL
 #if os(iOS)
 import UIKit
 #endif
@@ -48,6 +49,16 @@ final class AppModel {
         didSet { if let system { buffers.configure(system: system, window: plotWindow) } }
     }
 
+    // Lab Streaming Layer
+    var lslEnabled: Bool = UserDefaults.standard.bool(forKey: "lslEnabled") {
+        didSet { UserDefaults.standard.set(lslEnabled, forKey: "lslEnabled") }
+    }
+    var lsl: LSLConfiguration = AppModel.loadLSLConfiguration() {
+        didSet { UserDefaults.standard.set(try? JSONEncoder().encode(lsl), forKey: "lslConfiguration") }
+    }
+    private(set) var lslStreaming = false
+    private(set) var lslHasConsumers = false
+
     private(set) var dataStartedAt: Date?
     private(set) var currentRecording: URL?
     private(set) var recordings: [Recording] = []
@@ -56,6 +67,7 @@ final class AppModel {
     let buffers = SignalBuffers()
     private var session: TrignoSession?
     private var recorder: CSVRecorder?
+    private var streamer: LSLStreamer?
     private var eventTask: Task<Void, Never>?
     private var monitorTask: Task<Void, Never>?
 
@@ -128,6 +140,7 @@ final class AppModel {
 
     private func handleDisconnect() async {
         if isAcquiring { await finishRecording() }
+        closeLSL()
         session = nil
         phase = .disconnected
         setIdleTimer(disabled: false)
@@ -156,11 +169,21 @@ final class AppModel {
                 recorder = try CSVRecorder(directory: dir, system: system)
                 currentRecording = dir
             }
+            if lslEnabled {
+                // Creating outlets binds sockets; keep it off the main thread.
+                let config = lsl
+                streamer = await Task.detached { LSLStreamer(system: system, configuration: config) }.value
+                lslStreaming = true
+                info("LSL: streaming \"\(lsl.name)\" (\(streamer?.emgChannelLabels.count ?? 0) ch)"
+                     + (lsl.includeAux ? " + \"\(lsl.name) AUX\"" : ""))
+            }
             let buffers = self.buffers
             let recorder = self.recorder
+            let streamer = self.streamer
             try await session.start(waitForTrigger: triggerStart) { block in
                 buffers.push(block)
                 recorder?.write(block)
+                streamer?.push(block)
             }
             dataStartedAt = nil
             phase = triggerStart ? .armed : .streaming
@@ -171,6 +194,7 @@ final class AppModel {
             fail(error)
             await session.stop()
             discardRecording()
+            closeLSL()
         }
     }
 
@@ -184,6 +208,7 @@ final class AppModel {
             try? await session.armTriggers(start: false, stop: false)
         }
         await finishRecording()
+        closeLSL()
         phase = .connected
         setIdleTimer(disabled: false)
         info(byTrigger ? "Stopped by trigger" : "Stopped")
@@ -200,6 +225,18 @@ final class AppModel {
         self.recorder = nil
         currentRecording = nil
         reloadRecordings()
+    }
+
+    private func closeLSL() {
+        streamer = nil  // destroys the outlets; consumers see the stream end
+        lslStreaming = false
+        lslHasConsumers = false
+    }
+
+    private static func loadLSLConfiguration() -> LSLConfiguration {
+        guard let data = UserDefaults.standard.data(forKey: "lslConfiguration"),
+              let config = try? JSONDecoder().decode(LSLConfiguration.self, from: data) else { return LSLConfiguration() }
+        return config
     }
 
     private func discardRecording() {
@@ -224,6 +261,7 @@ final class AppModel {
                     }
                 }
                 self.lastSampleCounts = await session.samplesReceived()
+                self.lslHasConsumers = self.streamer?.hasConsumers ?? false
                 if let start = self.dataStartedAt, self.durationLimit > 0,
                    Date.now.timeIntervalSince(start) >= self.durationLimit {
                     await self.stopAcquisition()

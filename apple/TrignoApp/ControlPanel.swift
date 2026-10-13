@@ -73,6 +73,25 @@ struct ControlPanel: View {
             }
             .disabled(!model.isConnected)
 
+            Section("Lab Streaming Layer") {
+                Toggle("Stream to LSL", isOn: $model.lslEnabled)
+                    .disabled(model.isAcquiring)
+                NavigationLink {
+                    LSLSettingsView()
+                } label: {
+                    LabeledContent("Stream", value: model.lsl.name)
+                }
+                if model.lslStreaming {
+                    HStack {
+                        Text("Consumers")
+                        Spacer()
+                        Image(systemName: model.lslHasConsumers ? "checkmark.circle.fill" : "circle.dashed")
+                        Text(model.lslHasConsumers ? "Connected" : "None yet")
+                    }
+                    .foregroundStyle(model.lslHasConsumers ? .green : .secondary)
+                }
+            }
+
             if let system = model.system {
                 Section {
                     ForEach(system.sensors) { sensor in

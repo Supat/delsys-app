@@ -28,15 +28,20 @@ targets:
         excludes: [Info.plist]
     dependencies:
       - package: TrignoKit
+        product: TrignoKit
+      - package: TrignoKit
+        product: TrignoLSL
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.supatsaetia.trigno
         PRODUCT_NAME: Trigno
+        # Icon Composer file TrignoApp/AppIcon.icon (iPad + Mac).
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         TARGETED_DEVICE_FAMILY: "2"
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Trigno
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.medical
-        INFOPLIST_KEY_NSLocalNetworkUsageDescription: Trigno connects to the Trigno Control Utility on your local network to stream EMG and IMU data.
+        INFOPLIST_KEY_NSLocalNetworkUsageDescription: Trigno connects to the Trigno Control Utility and publishes Lab Streaming Layer streams on your local network.
         # Expose Documents/Recordings in the Files app (On My iPad › Trigno).
         INFOPLIST_FILE: TrignoApp/Info.plist
         INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace: YES
@@ -48,4 +53,8 @@ targets:
         # macOS sandbox: outgoing TCP to the SDK server.
         ENABLE_APP_SANDBOX[sdk=macosx*]: YES
         ENABLE_OUTGOING_NETWORK_CONNECTIONS[sdk=macosx*]: YES
+        # LSL outlets accept inlet connections and answer discovery queries.
+        ENABLE_INCOMING_NETWORK_CONNECTIONS[sdk=macosx*]: YES
         ENABLE_HARDENED_RUNTIME[sdk=macosx*]: YES
+        # Embedded frameworks (liblsl) live in Contents/Frameworks on macOS, not next to the binary.
+        LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]: "$(inherited) @executable_path/../Frameworks"
