@@ -30,6 +30,7 @@ class TrignoSession:
         self.stopped_by_trigger = threading.Event()
         self.disconnected = threading.Event()
         self.running = False
+        self.last_counts: dict[int, int] = {}
 
     def __enter__(self) -> TrignoSession:
         self.open()
@@ -64,15 +65,23 @@ class TrignoSession:
         With wait_for_trigger, START is not sent: the base station begins
         streaming when it receives the hardware start trigger (section 4).
         """
+        self.stopped_by_trigger.clear()
+        self.last_counts = {}
         endian = "big" if "BIG" in (self.system.endianness or "").upper() else "little"
-        for port in (protocol.EMG_PORT, protocol.AUX_PORT):
-            stream = DataStream(self.host, port, self._dispatch, endian=endian)
-            stream.connect()
-            self.streams.append(stream)
-        for s in self.streams:
-            s.start()
-        if not wait_for_trigger:
-            self.client.command("START", timeout=20)
+        try:
+            for port in (protocol.EMG_PORT, protocol.AUX_PORT):
+                stream = DataStream(self.host, port, self._dispatch, endian=endian)
+                stream.connect()
+                self.streams.append(stream)
+            for s in self.streams:
+                s.start()
+            if not wait_for_trigger:
+                self.client.command("START", timeout=20)
+        except Exception:
+            for s in self.streams:
+                s.stop()
+            self.streams.clear()
+            raise
         self.running = True
 
     def stop(self) -> None:
@@ -86,6 +95,20 @@ class TrignoSession:
                 log.exception("STOP failed")
         # Give the reader threads a moment to flush the last frames.
         time.sleep(0.2)
+        # Release the data ports: the TCU serves each one to a single client at a time.
+        self.last_counts = self.samples_received()
+        for s in self.streams:
+            s.stop()
+        self.streams.clear()
+
+    def samples_received(self) -> dict[int, int]:
+        """Samples per port in the current acquisition, or the last one once stopped."""
+        if not self.streams:
+            return dict(self.last_counts)
+        return {s.port: s.samples_received for s in self.streams}
+
+    def has_data(self) -> bool:
+        return any(s.first_data_time for s in self.streams)
 
     def wait_for_data(self, timeout: float | None = None) -> bool:
         deadline = None if timeout is None else time.monotonic() + timeout

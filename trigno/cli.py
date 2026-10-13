@@ -126,7 +126,7 @@ def cmd_record(args) -> int:
             # Leave the base station disarmed for the next user of the TCU.
             session.arm_triggers(start=False, stop=False)
 
-        counts = {s.port: s.samples_received for s in session.streams}
+        counts = session.samples_received()
         print("Samples received:", ", ".join(f"port {p}: {n}" for p, n in counts.items()))
         if recorder is not None:
             print(f"Saved to {recorder.close().parent}")

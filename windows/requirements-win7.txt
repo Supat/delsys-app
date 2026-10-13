@@ -1,0 +1,6 @@
+# Last releases that support Windows 7 and Python 3.8 (Python 3.9+ does not install on Windows 7).
+numpy==1.24.4
+PyQt5==5.15.10
+PyQt5-Qt5==5.15.2
+pyqtgraph==0.13.3
+pylsl==1.16.2

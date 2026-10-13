@@ -1,7 +1,8 @@
 # trigno — Delsys Trigno SDK client for macOS
 
-> There is also a native **iPad + Mac app** with the same features in
-> [`apple/`](apple/README.md).
+> Apps with the same features:
+> - **iPad + Mac** (SwiftUI): [`apple/`](apple/README.md)
+> - **Windows 7 SP1 and later** (PyQt5, `trigno-gui`): [`windows/`](windows/README.md)
 
 Reads EMG and IMU/aux data digitally from a Delsys Trigno system through the
 Trigno SDK server (TCP), instead of sampling the base station's analog outputs
@@ -38,7 +39,7 @@ whether Delsys's USB driver works under ARM, so test it before relying on it.
 
 ```bash
 python3 -m venv .venv
-.venv/bin/pip install -e '.[plot]'
+.venv/bin/pip install -e '.[plot,lsl]'
 export TRIGNO_HOST=192.168.1.50      # IP of the Windows PC
 .venv/bin/trigno info                 # base station, rates, sensors, channel map
 ```

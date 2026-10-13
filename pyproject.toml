@@ -5,16 +5,25 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "trigno"
 version = "0.1.0"
-description = "Stream Delsys Trigno EMG/IMU data from the Trigno SDK server over TCP (works on macOS)"
-requires-python = ">=3.10"
+description = "Stream Delsys Trigno EMG/IMU data from the Trigno SDK server over TCP (macOS, Windows 7+, Linux)"
+requires-python = ">=3.8"
 dependencies = ["numpy>=1.24"]
 
 [project.optional-dependencies]
-plot = ["pyqtgraph>=0.13", "PyQt6>=6.5"]
+# Qt 5 (PyQt5) keeps Windows 7 working; Qt 6 needs Windows 10+.
+plot = ["pyqtgraph>=0.12", "PyQt5>=5.15"]
+gui = ["pyqtgraph>=0.12", "PyQt5>=5.15"]
+lsl = ["pylsl>=1.16"]
 dev = ["pytest>=7"]
 
 [project.scripts]
 trigno = "trigno.cli:main"
 
+[project.gui-scripts]
+trigno-gui = "trigno.gui:main"
+
 [tool.setuptools]
-packages = ["trigno"]
+packages = ["trigno", "trigno.gui"]
+
+[tool.setuptools.package-data]
+"trigno.gui" = ["trigno.ico"]
