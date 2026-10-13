@@ -3,3 +3,9 @@ __pycache__/
 *.egg-info/
 recordings/
 .pytest_cache/
+.build/
+xcuserdata/
+*.xcuserstate
+DerivedData/
+.swiftpm/
+.DS_Store

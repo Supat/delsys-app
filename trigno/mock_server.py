@@ -55,6 +55,8 @@ class MockTrignoServer:
         self.trigger_start = False
         self.trigger_stop = False
         self.streaming = threading.Event()
+        # Each acquisition starts its signals from t=0, like a fresh START on the TCU.
+        self.restart = threading.Event()
         self._stop = threading.Event()
         self._listeners: list[socket.socket] = []
         self._data_clients: dict[int, list[socket.socket]] = {protocol.EMG_PORT: [], protocol.AUX_PORT: []}
@@ -172,6 +174,7 @@ class MockTrignoServer:
                 self._spawn(self._simulate_triggers)
             return "OK"
         if cmd == "START":
+            self.restart.set()
             self.streaming.set()
             return "OK"
         if cmd == "STOP":
@@ -240,6 +243,7 @@ class MockTrignoServer:
         if not self.trigger_start or self._stop.is_set():
             return
         log.info("Mock: start trigger")
+        self.restart.set()
         self.streaming.set()
         if self.trigger_stop:
             time.sleep(self.trigger_duration)
@@ -257,6 +261,9 @@ class MockTrignoServer:
                 time.sleep(0.005)
                 next_frame = time.monotonic()
                 continue
+            if self.restart.is_set():
+                self.restart.clear()
+                emg_i = aux_i = 0
             fmt = ("<" if self.endian == "LITTLE" else ">") + "f"
             emg = []
             for _ in range(EMG_SAMPLES_PER_FRAME):

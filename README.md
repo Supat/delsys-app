@@ -1,5 +1,8 @@
 # trigno — Delsys Trigno SDK client for macOS
 
+> There is also a native **iPad + Mac app** with the same features in
+> [`apple/`](apple/README.md).
+
 Reads EMG and IMU/aux data digitally from a Delsys Trigno system through the
 Trigno SDK server (TCP), instead of sampling the base station's analog outputs
 with a DAQ. Built from *MAN-025-3-5 Trigno SDK User Guide* (SDK v3.5).

@@ -1,0 +1,418 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		027474D5EB1814963715559F /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952B9CA45401748C2B6C46DE /* AppModel.swift */; };
+		11BBA40BF486A36B5C1DB0AC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9555F59BE51B49C1687EF9 /* ContentView.swift */; };
+		1B0768735832D6DF5A69F94F /* SettingsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911B7BD6D5C3A8A29583C176 /* SettingsViews.swift */; };
+		275B3E4FBEBCB6B5C0323DAD /* TrignoKit in Frameworks */ = {isa = PBXBuildFile; productRef = FE5481F7B29ECF58E90348A4 /* TrignoKit */; };
+		658BB7E7B4AABE935B84E7FF /* ControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2662D1B170ABE12434FFC2D8 /* ControlPanel.swift */; };
+		87F3E7EEC35A02C1CAD47F13 /* TrignoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076AE42B005E119E19C50BFF /* TrignoApp.swift */; };
+		8BE6C8A44BEED4C2223804AE /* LivePlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9B5D171B441E1C451E1449 /* LivePlotView.swift */; };
+		A78D0CA324856A1BE416AE96 /* SignalBuffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D7C89A6ACC99AC9E30DB5 /* SignalBuffers.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		048D7C89A6ACC99AC9E30DB5 /* SignalBuffers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalBuffers.swift; sourceTree = "<group>"; };
+		076AE42B005E119E19C50BFF /* TrignoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrignoApp.swift; sourceTree = "<group>"; };
+		2662D1B170ABE12434FFC2D8 /* ControlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanel.swift; sourceTree = "<group>"; };
+		4A53FA3CBF079BF8D25A29C4 /* Trigno.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trigno.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D9555F59BE51B49C1687EF9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8E9B5D171B441E1C451E1449 /* LivePlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePlotView.swift; sourceTree = "<group>"; };
+		911B7BD6D5C3A8A29583C176 /* SettingsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViews.swift; sourceTree = "<group>"; };
+		952B9CA45401748C2B6C46DE /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		DC17FEB9E23BD4E9490A5809 /* TrignoKit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TrignoKit; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FD6D4CA39A68B862574929E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				275B3E4FBEBCB6B5C0323DAD /* TrignoKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		608EE9DAE3B440CF4D16008A /* TrignoApp */ = {
+			isa = PBXGroup;
+			children = (
+				952B9CA45401748C2B6C46DE /* AppModel.swift */,
+				4D9555F59BE51B49C1687EF9 /* ContentView.swift */,
+				2662D1B170ABE12434FFC2D8 /* ControlPanel.swift */,
+				8E9B5D171B441E1C451E1449 /* LivePlotView.swift */,
+				911B7BD6D5C3A8A29583C176 /* SettingsViews.swift */,
+				048D7C89A6ACC99AC9E30DB5 /* SignalBuffers.swift */,
+				076AE42B005E119E19C50BFF /* TrignoApp.swift */,
+			);
+			path = TrignoApp;
+			sourceTree = "<group>";
+		};
+		63953F0CFB646B454AC793A6 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				DC17FEB9E23BD4E9490A5809 /* TrignoKit */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		81F9E0FE85D6A82E1D500209 = {
+			isa = PBXGroup;
+			children = (
+				63953F0CFB646B454AC793A6 /* Packages */,
+				608EE9DAE3B440CF4D16008A /* TrignoApp */,
+				9E210194E82BDCC1F0E45B7C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9E210194E82BDCC1F0E45B7C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4A53FA3CBF079BF8D25A29C4 /* Trigno.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A14864C4228B67D5B3E5BDD5 /* Trigno */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07ABFD7E8B55933A007EEC43 /* Build configuration list for PBXNativeTarget "Trigno" */;
+			buildPhases = (
+				7569E98AE7A9E35F08F4074D /* Sources */,
+				FD6D4CA39A68B862574929E0 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Trigno;
+			packageProductDependencies = (
+				FE5481F7B29ECF58E90348A4 /* TrignoKit */,
+			);
+			productName = Trigno;
+			productReference = 4A53FA3CBF079BF8D25A29C4 /* Trigno.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8E32DF51D5A6F464E922EACC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					A14864C4228B67D5B3E5BDD5 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = EEC80B102905CF5A3D1889E2 /* Build configuration list for PBXProject "Trigno" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 81F9E0FE85D6A82E1D500209;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6CB332396C3F7360150DF9A2 /* XCLocalSwiftPackageReference "TrignoKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 9E210194E82BDCC1F0E45B7C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A14864C4228B67D5B3E5BDD5 /* Trigno */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7569E98AE7A9E35F08F4074D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				027474D5EB1814963715559F /* AppModel.swift in Sources */,
+				11BBA40BF486A36B5C1DB0AC /* ContentView.swift in Sources */,
+				658BB7E7B4AABE935B84E7FF /* ControlPanel.swift in Sources */,
+				8BE6C8A44BEED4C2223804AE /* LivePlotView.swift in Sources */,
+				1B0768735832D6DF5A69F94F /* SettingsViews.swift in Sources */,
+				A78D0CA324856A1BE416AE96 /* SignalBuffers.swift in Sources */,
+				87F3E7EEC35A02C1CAD47F13 /* TrignoApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0884671EC811C6F1569BD482 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		1D693A434BBF6F9790DA74A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		5DFB68EB58F918C3D2B8AF34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = LV4TZ9M6Q9;
+				ENABLE_APP_SANDBOX = YES;
+				"ENABLE_APP_SANDBOX[sdk=macosx*]" = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				"ENABLE_OUTGOING_NETWORK_CONNECTIONS[sdk=macosx*]" = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TrignoApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Trigno;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Trigno connects to the Trigno Control Utility on your local network to stream EMG and IMU data.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.supatsaetia.trigno;
+				PRODUCT_NAME = Trigno;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		AA360766BFDF557DB59D2743 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = LV4TZ9M6Q9;
+				ENABLE_APP_SANDBOX = YES;
+				"ENABLE_APP_SANDBOX[sdk=macosx*]" = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				"ENABLE_OUTGOING_NETWORK_CONNECTIONS[sdk=macosx*]" = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TrignoApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Trigno;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Trigno connects to the Trigno Control Utility on your local network to stream EMG and IMU data.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.supatsaetia.trigno;
+				PRODUCT_NAME = Trigno;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		07ABFD7E8B55933A007EEC43 /* Build configuration list for PBXNativeTarget "Trigno" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DFB68EB58F918C3D2B8AF34 /* Debug */,
+				AA360766BFDF557DB59D2743 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EEC80B102905CF5A3D1889E2 /* Build configuration list for PBXProject "Trigno" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D693A434BBF6F9790DA74A9 /* Debug */,
+				0884671EC811C6F1569BD482 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		6CB332396C3F7360150DF9A2 /* XCLocalSwiftPackageReference "TrignoKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = TrignoKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FE5481F7B29ECF58E90348A4 /* TrignoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TrignoKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 8E32DF51D5A6F464E922EACC /* Project object */;
+}
