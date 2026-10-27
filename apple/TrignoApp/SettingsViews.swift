@@ -212,6 +212,10 @@ struct RecordingsView: View {
 
 struct LSLSettingsView: View {
     @Environment(AppModel.self) private var model
+    #if os(iOS)
+    @State private var addresses: [LocalIPv4Address] = []
+    @State private var copied = false
+    #endif
 
     var body: some View {
         @Bindable var model = model
@@ -226,6 +230,7 @@ struct LSLSettingsView: View {
                 Text("Defaults match the NI-DAQ app (Daq_revised.py), so LabRecorder and existing scripts find the stream unchanged.")
             }
             .autocorrectionDisabled()
+            .disabled(model.isAcquiring)
 
             Section {
                 Picker("Channels", selection: $model.lsl.layout) {
@@ -245,19 +250,63 @@ struct LSLSettingsView: View {
             } footer: {
                 Text("16 slots keeps channel n = sensor slot n, with zeros for empty slots. The SDK reports volts at the electrode; the DAQ recorded the base's amplified analog output, so set EMG scale to that gain if consumers expect the old magnitudes. AUX carries IMU channels at the AUX port rate.")
             }
+            .disabled(model.isAcquiring)
+
+            #if os(iOS)
+            discoverySection
+            #endif
 
             Section {
                 Button("Restore defaults") { model.lsl = LSLConfiguration() }
             } footer: {
-                #if os(iOS)
-                Text("liblsl \(LSLStreamer.libraryVersion). On iPad, receivers may not discover the stream automatically, because iPadOS restricts multicast. Add the iPad's IP to KnownPeers in lsl_api.cfg on the receiving computer.")
-                #else
                 Text("liblsl \(LSLStreamer.libraryVersion).")
-                #endif
             }
+            .disabled(model.isAcquiring)
         }
         .formStyle(.grouped)
-        .disabled(model.isAcquiring)
         .navigationTitle("LSL")
     }
+
+    #if os(iOS)
+    /// iPadOS blocks the UDP multicast that LSL uses for discovery, so receivers need
+    /// this iPad's address in `KnownPeers`. Show it, with the config lines to paste.
+    private var discoverySection: some View {
+        Section {
+            if addresses.isEmpty {
+                Text("Not connected to Wi-Fi or Ethernet.")
+                    .foregroundStyle(.secondary)
+            } else {
+                ForEach(addresses) { item in
+                    LabeledContent(item.displayName) {
+                        Text(item.address).monospaced().textSelection(.enabled)
+                    }
+                }
+                LabeledContent("lsl_api.cfg") {
+                    Text(LocalNetwork.knownPeersConfig(for: addresses))
+                        .monospaced()
+                        .multilineTextAlignment(.trailing)
+                        .textSelection(.enabled)
+                }
+                Button(copied ? "Copied" : "Copy lsl_api.cfg lines") {
+                    UIPasteboard.general.string = LocalNetwork.knownPeersConfig(for: addresses)
+                    copied = true
+                    Task {
+                        try? await Task.sleep(for: .seconds(2))
+                        copied = false
+                    }
+                }
+            }
+        } header: {
+            Text("Discovery on the receiving computer")
+        } footer: {
+            Text("iPadOS does not allow the multicast LSL uses for discovery, so LabRecorder and other receivers will not find this iPad's streams by themselves. On the receiving computer, save the lines above in a file named lsl_api.cfg in LabRecorder's folder (Windows) or in ~/lsl_api/ (Mac, Linux), then restart the receiver. It will then ask this iPad directly. Give the iPad a fixed IP or DHCP reservation so the entry stays valid.")
+        }
+        .task {
+            while !Task.isCancelled {
+                addresses = LocalNetwork.ipv4Addresses()
+                try? await Task.sleep(for: .seconds(3))
+            }
+        }
+    }
+    #endif
 }

@@ -76,8 +76,18 @@ Things to know:
 - **Discovery from an iPad.** LSL finds streams via UDP multicast/broadcast,
   which iPadOS only permits with Apple's restricted
   `com.apple.developer.networking.multicast` entitlement. Without it, add the
-  iPad's IP to `KnownPeers` in `lsl_api.cfg` on the receiving computer, for
-  example `KnownPeers = {192.168.11.23}` under `[lab]`. Or request the
+  iPad's IP to `KnownPeers` in `lsl_api.cfg` on the receiving computer. The LSL
+  settings screen on the iPad shows its current IP and the lines to copy:
+
+  ```ini
+  [lab]
+  KnownPeers = {192.168.11.23}
+  ```
+
+  Save them as `lsl_api.cfg` in LabRecorder's folder on Windows, or in
+  `~/lsl_api/lsl_api.cfg` on Mac/Linux, and restart the receiver. liblsl then
+  queries the iPad directly instead of waiting for a multicast reply. Give the
+  iPad a fixed IP or DHCP reservation so the entry stays valid. Or request the
   entitlement from Apple and add it to the app's entitlements. The Mac build
   needs nothing extra.
 - liblsl is the official v1.17.7 `lsl.xcframework`, fetched by SwiftPM from the
