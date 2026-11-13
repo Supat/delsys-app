@@ -7,6 +7,8 @@ let package = Package(
     products: [
         .library(name: "TrignoKit", targets: ["TrignoKit"]),
         .library(name: "TrignoLSL", targets: ["TrignoLSL"]),
+        // liblsl C API, so other packages (e.g. robot-arm-controller) can build LSL inlets.
+        .library(name: "CLSL", targets: ["CLSL"]),
     ],
     targets: [
         .target(name: "TrignoKit"),
