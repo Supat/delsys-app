@@ -1,0 +1,35 @@
+# Builds Trigno.exe on a clean Windows runner with Python 3.8 (the Windows 7 stack), runs its
+# self-test, and uploads dist\Trigno as the "Trigno-windows" artifact. Download it from the run's
+# page under Actions, extract it into a folder and run Trigno.exe; no build PC needed.
+name: Windows build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "trigno/**"
+      - "windows/**"
+      - "pyproject.toml"
+      - ".github/workflows/windows-build.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          architecture: x64
+      - name: Build Trigno.exe and run its self-test
+        shell: cmd
+        run: windows\build_core.bat python
+      - name: Check the bundled DLLs
+        shell: cmd
+        run: dir dist\Trigno\*.dll
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Trigno-windows
+          path: dist/Trigno
+          if-no-files-found: error
