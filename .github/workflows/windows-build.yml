@@ -1,6 +1,9 @@
 # Builds Trigno.exe on a clean Windows runner with Python 3.8 (the Windows 7 stack), runs its
-# self-test, and uploads dist\Trigno as the "Trigno-windows" artifact. Download it from the run's
-# page under Actions, extract it into a folder and run Trigno.exe; no build PC needed.
+# self-test, and publishes dist\Trigno two ways:
+#   - Trigno-windows.zip on the rolling "latest" release (stable URL, no GitHub login needed):
+#     https://github.com/Supat/delsys-app/releases/download/latest/Trigno-windows.zip
+#   - the "Trigno-windows" artifact on the run's page under Actions.
+# Extract the zip into a folder and run Trigno.exe; no build PC needed.
 name: Windows build
 
 on:
@@ -12,6 +15,9 @@ on:
       - "pyproject.toml"
       - ".github/workflows/windows-build.yml"
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -33,3 +39,16 @@ jobs:
           name: Trigno-windows
           path: dist/Trigno
           if-no-files-found: error
+      - name: Publish Trigno-windows.zip on the "latest" release
+        if: github.ref == 'refs/heads/main'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          Compress-Archive -Path dist\Trigno -DestinationPath Trigno-windows.zip
+          gh release view latest 2>$null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create latest --title "Trigno for Windows (latest build)" --notes "Built and self-tested automatically from the newest code on main. Download Trigno-windows.zip, extract it into a folder, and run Trigno.exe."
+          }
+          gh release upload latest Trigno-windows.zip --clobber
+          if ($LASTEXITCODE -ne 0) { exit 1 }

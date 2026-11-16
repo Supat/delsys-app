@@ -20,16 +20,28 @@ still runs on Windows 7: Python 3.9+ and Qt 6 need Windows 8/10.
 ## Option A: download the prebuilt `Trigno.exe` (recommended)
 
 Every push to `main` that touches the app builds `Trigno.exe` on a clean
-Windows machine with GitHub Actions, runs its self-test, and keeps the result
-as a download:
+Windows machine with GitHub Actions, runs its self-test, and publishes the
+result. To install or update, on the measurement PC (or any PC, then copy):
 
-1. Open the repository's **Actions** tab, pick the latest **Windows build** run.
-2. Under **Artifacts**, download **Trigno-windows**.
-3. Extract the zip into a folder (for example `C:\Trigno`) and run `Trigno.exe`
-   from there. Python is not needed on the measurement PC.
+1. Download
+   [Trigno-windows.zip](https://github.com/Supat/delsys-app/releases/download/latest/Trigno-windows.zip)
+   (no GitHub account needed; the same zip is also on the repository's
+   **Releases** page under **latest**).
+2. Delete the old `Trigno` folder if there is one, then extract the zip into a
+   folder (for example `C:\Trigno`).
+3. Run `Trigno.exe` from the extracted `Trigno` folder. Python is not needed
+   on the measurement PC.
 
-To build it on demand, open the **Windows build** workflow and press
-**Run workflow**.
+The zip is rebuilt from the newest code on every change; re-downloading it is
+always the up-to-date, self-tested app. The same build is also kept as the
+**Trigno-windows** artifact on each run's page under **Actions**, and you can
+rebuild on demand there by pressing **Run workflow** on the **Windows build**
+workflow.
+
+Don't pass the app along as part of a zipped working copy of this repository:
+a stale `dist\Trigno` from an old build may be hiding in there (older builds
+shipped broken, see [Troubleshooting](#troubleshooting)). Share the release
+zip, or the link above, instead.
 
 ## Option A2: build `Trigno.exe` yourself
 
@@ -108,9 +120,10 @@ without it.
   into `dist\Trigno`, then copy the folder to the measurement PC again. If that
   file is missing from `.venv-build` too, antivirus software removed it (see
   below).
-- **Better**: download the prebuilt app from GitHub Actions (Option A), or
-  rebuild with the current `build_exe.bat`, which bundles the DLL explicitly
-  and checks for it.
+- **Better**: re-download
+  [Trigno-windows.zip](https://github.com/Supat/delsys-app/releases/download/latest/Trigno-windows.zip)
+  and replace the whole folder (Option A), or rebuild with the current
+  `build_exe.bat`, which bundles the DLL explicitly and checks for it.
 
 Other causes of the same message:
 
